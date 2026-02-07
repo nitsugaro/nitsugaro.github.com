@@ -1,11 +1,588 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import '../styles/global.css';
+import journey from '../assets/journey.png';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const brand = 'Tharos';
+const tagline = 'CIAM/IAM para infra moderna';
+const subtag =
+  'Unificá identidades, autenticación, autorización y protección de APIs en una sola plataforma: IDM + AM + Gateway, con journeys visuales, políticas finas y auditoría end-to-end.';
+const nav = [
+  { label: 'Producto', href: '#producto' },
+  { label: 'Arquitectura', href: '#arquitectura' },
+  { label: 'Casos', href: '#casos' },
+  { label: 'Seguridad', href: '#seguridad' },
+];
+const features = [
+  {
+    title: 'Journeys visuales',
+    desc: 'Orquestá login, registro, step-up y recovery con un builder tipo flow: condiciones, MFA, passkeys, riesgo y decisiones.',
+    icon: '⟡',
+  },
+  {
+    title: 'AM moderno',
+    desc: 'OIDC/OAuth2 completo, PKCE, PAR, DPoP/mTLS, sesiones y SSO. Políticas por app, tenant y contexto.',
+    icon: '◎',
+  },
+  {
+    title: 'IDM real',
+    desc: 'Usuarios, grupos, roles, atributos y lifecycle. Provisioning, reconciliación y conectores a tu infra.',
+    icon: '◇',
+  },
+  {
+    title: 'Gateway integrado',
+    desc: 'Protección de APIs y apps: tokens, introspección, scopes/claims, rate-limit, WAF hooks y auditoría.',
+    icon: '▣',
+  },
+  {
+    title: 'Policy Engine',
+    desc: 'Autorización fina: RBAC/ABAC, reglas con contexto (device, risk, geo, app) y decisiones consistentes.',
+    icon: '⟐',
+  },
+  {
+    title: 'Observabilidad',
+    desc: 'Logs estructurados, métricas, tracing y eventos auditables por request: quién, qué, cuándo y por qué.',
+    icon: '⎈',
+  },
+];
+
+const useCases = [
+  {
+    title: 'B2C CIAM',
+    desc: 'Onboarding, login sin fricción, recuperación segura, step-up según riesgo y antifraude.',
+  },
+  {
+    title: 'B2B & Partners',
+    desc: 'Tenancy, organizaciones, roles por entidad, federación y control granular por aplicación.',
+  },
+  {
+    title: 'Zero-Trust APIs',
+    desc: 'Gateway + AM: tokens, scopes, políticas y auditoría en el borde con latencia baja.',
+  },
+];
+
+const security = [
+  { k: 'Criptografía', v: 'Rotación de claves, JWKS, firmas, hashing de secretos y storage seguro.' },
+  { k: 'MFA & Passkeys', v: 'WebAuthn/Passkeys, OTP, push, step-up y políticas por app.' },
+  { k: 'Protección', v: 'Rate-limits, detección de anomalías, hooks de riesgo y bloqueo adaptativo.' },
+  { k: 'Compliance', v: 'Auditoría y trazabilidad end-to-end con eventos inmutables.' },
+];
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{brand} — {tagline}</title>
+  </head>
+
+  <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+    <!-- BACKDROP -->
+    <div class="pointer-events-none fixed inset-0 -z-10">
+      <div
+        class="absolute inset-0 bg-[radial-gradient(900px_600px_at_20%_10%,rgba(59,130,246,0.22),transparent_60%),radial-gradient(700px_500px_at_75%_25%,rgba(56,189,248,0.18),transparent_55%),radial-gradient(900px_700px_at_50%_90%,rgba(99,102,241,0.14),transparent_60%)]"
+      >
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-b from-slate-950/20 via-slate-950 to-slate-950"></div>
+      <div class="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/40 to-transparent"></div>
+    </div>
+
+    <!-- NAV -->
+    <header class="sticky top-0 z-40 border-b border-white/5 bg-slate-950/60 backdrop-blur">
+      <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+        <a href="#" class="group flex items-center gap-3">
+          <div
+            class="grid h-9 w-9 place-items-center rounded-xl border border-white/10 bg-white/5 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]"
+          >
+            <div class="h-4 w-4 rounded-sm border-2 border-white/80">
+              <div class="mt-[5px] h-[2px] w-3 bg-white/80"></div>
+            </div>
+          </div>
+          <div class="leading-tight">
+            <div class="text-sm font-semibold tracking-wide">{brand}</div>
+            <div class="text-xs text-slate-400">{tagline}</div>
+          </div>
+        </a>
+
+        <nav class="hidden items-center gap-6 md:flex">
+          {
+            nav.map((n) => (
+              <a href={n.href} class="text-sm text-slate-300 transition hover:text-white">
+                {n.label}
+              </a>
+            ))
+          }
+        </nav>
+
+        <div class="flex items-center gap-3">
+          <a
+            href="#demo"
+            class="hidden rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 transition hover:bg-white/10 md:inline-flex"
+          >
+            Pedir demo
+          </a>
+          <a
+            href="#demo"
+            class="inline-flex items-center gap-2 rounded-xl bg-blue-600/90 px-4 py-2 text-sm font-semibold text-white shadow-[0_20px_60px_-25px_rgba(59,130,246,0.9)] transition hover:bg-blue-500"
+          >
+            Empezar
+            <span class="text-white/80">→</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <main class="mx-auto max-w-6xl px-5">
+      <section class="relative pt-14 md:pt-20">
+        <div class="grid items-start gap-10 md:grid-cols-2">
+          <div>
+            <div
+              class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300"
+            >
+              <span class="inline-block h-1.5 w-1.5 rounded-full bg-blue-400 shadow-[0_0_0_4px_rgba(59,130,246,0.15)]"
+              ></span>
+              Plataforma CIAM/IAM todo-en-uno
+            </div>
+
+            <h1 class="mt-5 text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
+              Identidad y acceso,
+              <span class="bg-gradient-to-r from-blue-400 via-sky-300 to-indigo-300 bg-clip-text text-transparent">
+                hecho para flujos reales
+              </span>
+              .
+            </h1>
+
+            <p class="mt-4 text-base leading-relaxed text-slate-300 md:text-lg">
+              {subtag}
+            </p>
+
+            <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <a
+                href="#demo"
+                class="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600/90 px-5 py-3 text-sm font-semibold text-white shadow-[0_24px_80px_-30px_rgba(59,130,246,0.95)] transition hover:bg-blue-500"
+              >
+                Pedir demo
+                <span class="text-white/80">→</span>
+              </a>
+              <a
+                href="#arquitectura"
+                class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm text-slate-200 transition hover:bg-white/10"
+              >
+                Ver arquitectura
+              </a>
+            </div>
+
+            <div class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3">
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div class="text-xs text-slate-400">Tiempo a producción</div>
+                <div class="mt-1 text-lg font-semibold">Días</div>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div class="text-xs text-slate-400">Políticas</div>
+                <div class="mt-1 text-lg font-semibold">ABAC/RBAC</div>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div class="text-xs text-slate-400">Gateway</div>
+                <div class="mt-1 text-lg font-semibold">Edge</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- HERO VISUAL -->
+          <!-- HERO VISUAL -->
+          <div class="relative">
+            <!-- glow -->
+            <div
+              class="absolute -inset-6 -z-10 rounded-[32px] bg-gradient-to-br from-blue-600/10 via-sky-500/10 to-indigo-500/10 blur-2xl"
+            >
+            </div>
+
+            <!-- card -->
+            <div
+              class="rounded-[28px] border border-white/10 bg-white/5 p-5 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur"
+            >
+              <div
+                class="h-[100%] rounded-[28px] border border-white/10 bg-white/5 p-5 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur flex flex-col justify-center"
+              >
+                <img
+                  id="journey-image"
+                  src={journey.src}
+                  class="rounded-[10px] cursor-zoom-in transition hover:opacity-90"
+                  onclick="openJourneyModal()"
+                />
+              </div>
+
+              <div class="mt-4 grid grid-cols-3 gap-3">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
+                  <div class="text-xs text-slate-400">Tokens</div>
+                  <div class="mt-1 text-sm font-semibold">JWT / Opaque</div>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
+                  <div class="text-xs text-slate-400">MFA</div>
+                  <div class="mt-1 text-sm font-semibold">Passkeys</div>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
+                  <div class="text-xs text-slate-400">Policies</div>
+                  <div class="mt-1 text-sm font-semibold">Realtime</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- MODAL -->
+            <div
+              id="journey-modal"
+              class="fixed inset-0 z-50 hidden items-center justify-center
+			 bg-black/70 backdrop-blur-sm
+			 opacity-0 transition-opacity duration-200 ease-out"
+              onclick="closeJourneyModal(event)"
+            >
+              <div
+                id="journey-modal-card"
+                class="relative max-h-[90vh] max-w-[90vw]
+			   rounded-2xl border border-white/10 bg-slate-950/90 p-4 shadow-2xl
+			   scale-95 opacity-0
+			   transition-all duration-200 ease-out"
+              >
+                <button
+                  type="button"
+                  class="absolute right-3 top-3 rounded-lg bg-white/10 px-2 py-1 text-sm text-white hover:bg-white/20"
+                  onclick="closeJourneyModal(event)"
+                  aria-label="Cerrar"
+                >
+                  ✕
+                </button>
+
+                <img id="journey-modal-img" class="max-h-[80vh] max-w-[85vw] rounded-xl object-contain" />
+              </div>
+            </div>
+
+            <script is:inline>
+              window.openJourneyModal = function () {
+                const modal = document.getElementById('journey-modal');
+                const card = document.getElementById('journey-modal-card');
+                const modalImg = document.getElementById('journey-modal-img');
+                const sourceImg = document.getElementById('journey-image');
+                if (!modal || !card || !modalImg || !sourceImg) return;
+
+                modalImg.src = sourceImg.src;
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+
+                requestAnimationFrame(() => {
+                  modal.classList.remove('opacity-0');
+                  card.classList.remove('opacity-0', 'scale-95');
+                  card.classList.add('opacity-100', 'scale-100');
+                });
+
+                document.body.style.overflow = 'hidden';
+              };
+
+              window.closeJourneyModal = function (e) {
+                const modal = document.getElementById('journey-modal');
+                const card = document.getElementById('journey-modal-card');
+                if (!modal || !card) return;
+
+                const clickedBackdrop = e?.target?.id === 'journey-modal';
+                const clickedCloseBtn = e?.target?.closest?.('button');
+
+                if (clickedBackdrop || clickedCloseBtn) {
+                  modal.classList.add('opacity-0');
+                  card.classList.add('opacity-0', 'scale-95');
+                  card.classList.remove('scale-100');
+
+                  setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                    document.body.style.overflow = '';
+                  }, 200);
+                }
+              };
+
+              document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                  window.closeJourneyModal({ target: { id: 'journey-modal' } });
+                }
+              });
+            </script>
+          </div>
+        </div>
+      </section>
+
+      <!-- FEATURES -->
+      <section id="producto" class="pt-16 md:pt-20">
+        <div class="flex items-end justify-between gap-6">
+          <div>
+            <h2 class="text-2xl font-semibold tracking-tight md:text-3xl">Una plataforma, tres capas clave</h2>
+            <p class="mt-2 max-w-2xl text-slate-300">
+              Identity Management, Access Management y Gateway trabajando juntos, con el mismo modelo de políticas y
+              auditoría.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-8 grid gap-4 md:grid-cols-3">
+          {
+            features.map((f) => (
+              <div class="group rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10">
+                <div class="flex items-center justify-between">
+                  <div class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-slate-950/40 text-slate-100">
+                    <span class="text-lg">{f.icon}</span>
+                  </div>
+                  <div class="h-8 w-8 rounded-full bg-blue-500/10 opacity-0 blur-xl transition group-hover:opacity-100" />
+                </div>
+                <div class="mt-4 text-base font-semibold">{f.title}</div>
+                <p class="mt-2 text-sm leading-relaxed text-slate-300">{f.desc}</p>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- ARCHITECTURE -->
+      <section id="arquitectura" class="pt-16 md:pt-20">
+        <div class="grid gap-8 md:grid-cols-2">
+          <div>
+            <h2 class="text-2xl font-semibold tracking-tight md:text-3xl">
+              Arquitectura pensada para tu infraestructura
+            </h2>
+            <p class="mt-3 text-slate-300">
+              Deploy flexible: edge/cluster, multi-tenant, integración con tus apps, APIs y herramientas existentes.
+              Todo con contratos claros: tokens, claims, scopes, políticas y eventos.
+            </p>
+
+            <div class="mt-6 space-y-3">
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div class="text-sm font-semibold">Gateway</div>
+                <div class="mt-1 text-sm text-slate-300">
+                  Protege apps y APIs con verificación de token, políticas, límites y observabilidad.
+                </div>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div class="text-sm font-semibold">AM</div>
+                <div class="mt-1 text-sm text-slate-300">
+                  Emite tokens, maneja sesiones, MFA y journeys. Integra riesgo, device signals y step-up.
+                </div>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div class="text-sm font-semibold">IDM</div>
+                <div class="mt-1 text-sm text-slate-300">
+                  Modelo de identidad, roles, grupos y provisioning. Auditoría y lifecycle centralizados.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="relative">
+            <div
+              class="absolute -inset-6 -z-10 rounded-[32px] bg-gradient-to-br from-sky-500/10 via-blue-600/10 to-indigo-500/10 blur-2xl"
+            >
+            </div>
+            <div class="rounded-[28px] border border-white/10 bg-white/5 p-5">
+              <div class="flex items-center justify-between">
+                <div class="text-sm font-semibold text-slate-200">Request path</div>
+                <span class="rounded-lg bg-white/5 px-2 py-1 text-[10px] text-slate-300">EDGE → CORE</span>
+              </div>
+
+              <div class="mt-4 rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                <div class="space-y-3">
+                  <div class="flex items-center gap-3">
+                    <div class="h-10 w-10 rounded-xl border border-white/10 bg-white/5"></div>
+                    <div class="flex-1 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                      <div class="text-sm font-semibold">App / API</div>
+                      <div class="text-xs text-slate-400">OIDC client • Resource server</div>
+                    </div>
+                  </div>
+
+                  <div class="ml-5 h-6 border-l border-dashed border-white/20"></div>
+
+                  <div class="flex items-center gap-3">
+                    <div class="h-10 w-10 rounded-xl border border-white/10 bg-white/5"></div>
+                    <div class="flex-1 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                      <div class="text-sm font-semibold">Gateway</div>
+                      <div class="text-xs text-slate-400">Policy • Rate limit • Audit</div>
+                    </div>
+                  </div>
+
+                  <div class="ml-5 h-6 border-l border-dashed border-white/20"></div>
+
+                  <div class="flex items-center gap-3">
+                    <div class="h-10 w-10 rounded-xl border border-white/10 bg-white/5"></div>
+                    <div class="flex-1 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                      <div class="text-sm font-semibold">AM</div>
+                      <div class="text-xs text-slate-400">OAuth2/OIDC • Sessions • Journeys</div>
+                    </div>
+                  </div>
+
+                  <div class="ml-5 h-6 border-l border-dashed border-white/20"></div>
+
+                  <div class="flex items-center gap-3">
+                    <div class="h-10 w-10 rounded-xl border border-white/10 bg-white/5"></div>
+                    <div class="flex-1 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                      <div class="text-sm font-semibold">IDM</div>
+                      <div class="text-xs text-slate-400">Users • Groups • Roles • Provisioning</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-4 grid grid-cols-2 gap-3">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <div class="text-xs text-slate-400">Integraciones</div>
+                  <div class="mt-1 text-sm font-semibold">LDAP • SCIM • APIs</div>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <div class="text-xs text-slate-400">Eventos</div>
+                  <div class="mt-1 text-sm font-semibold">Audit • Webhooks</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- USE CASES -->
+      <section id="casos" class="pt-16 md:pt-20">
+        <div class="flex items-end justify-between gap-6">
+          <div>
+            <h2 class="text-2xl font-semibold tracking-tight md:text-3xl">Casos típicos donde brilla</h2>
+            <p class="mt-2 max-w-2xl text-slate-300">
+              De onboarding masivo a integraciones enterprise: mantenés consistencia en políticas, identidad y
+              auditoría.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-8 grid gap-4 md:grid-cols-3">
+          {
+            useCases.map((c) => (
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
+                <div class="text-base font-semibold">{c.title}</div>
+                <p class="mt-2 text-sm leading-relaxed text-slate-300">{c.desc}</p>
+                <div class="mt-4 h-px bg-white/10" />
+                <div class="mt-4 text-xs text-slate-400">Diseñado para: flujos, control y escalabilidad</div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- SECURITY -->
+      <section id="seguridad" class="pt-16 md:pt-20">
+        <div class="rounded-[28px] border border-white/10 bg-white/5 p-6 md:p-8">
+          <div class="grid gap-8 md:grid-cols-2">
+            <div>
+              <h2 class="text-2xl font-semibold tracking-tight md:text-3xl">Seguridad como feature, no como addon</h2>
+              <p class="mt-3 text-slate-300">
+                Controles fuertes, trazabilidad y decisiones consistentes entre el gateway y el core.
+              </p>
+
+              <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+                <a
+                  href="#demo"
+                  class="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600/90 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-500"
+                >
+                  Hablar con nosotros
+                  <span class="text-white/80">→</span>
+                </a>
+                <a
+                  href="#producto"
+                  class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm text-slate-200 transition hover:bg-white/10"
+                >
+                  Ver capacidades
+                </a>
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              {
+                security.map((s) => (
+                  <div class="rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+                    <div class="text-sm font-semibold">{s.k}</div>
+                    <div class="mt-1 text-sm text-slate-300">{s.v}</div>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section id="demo" class="pt-16 pb-20 md:pt-20">
+        <div class="relative overflow-hidden rounded-[28px] border border-white/10 bg-white/5 p-7 md:p-10">
+          <div class="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-blue-600/20 blur-3xl"></div>
+          <div class="absolute -left-24 -bottom-24 h-80 w-80 rounded-full bg-indigo-600/20 blur-3xl"></div>
+
+          <div class="relative grid gap-8 md:grid-cols-2 md:items-center">
+            <div>
+              <h2 class="text-2xl font-semibold tracking-tight md:text-3xl">Llevá tu identidad a nivel plataforma</h2>
+              <p class="mt-3 text-slate-300">
+                Si querés, armamos una demo con un flow real (login/registro/step-up) y políticas sobre una API
+                protegida por gateway.
+              </p>
+            </div>
+
+            <form class="relative space-y-3">
+              <div class="grid gap-3 sm:grid-cols-2">
+                <input
+                  type="text"
+                  placeholder="Nombre"
+                  class="w-full rounded-xl border border-white/10 bg-slate-950/40 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 outline-none ring-0 transition focus:border-blue-500/40 focus:bg-slate-950/55"
+                />
+                <input
+                  type="email"
+                  placeholder="Email"
+                  class="w-full rounded-xl border border-white/10 bg-slate-950/40 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-blue-500/40 focus:bg-slate-950/55"
+                />
+              </div>
+              <input
+                type="text"
+                placeholder="Empresa / Proyecto"
+                class="w-full rounded-xl border border-white/10 bg-slate-950/40 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-blue-500/40 focus:bg-slate-950/55"
+              />
+              <button
+                type="button"
+                class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600/90 px-5 py-3 text-sm font-semibold text-white shadow-[0_24px_80px_-35px_rgba(59,130,246,0.95)] transition hover:bg-blue-500"
+              >
+                Solicitar demo
+                <span class="text-white/80">→</span>
+              </button>
+              <div class="text-xs text-slate-400">Sin spam. Solo coordinación de demo.</div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-white/5 bg-slate-950/30">
+      <div class="mx-auto max-w-6xl px-5 py-10">
+        <div class="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
+          <div class="flex items-center gap-3">
+            <div class="grid h-9 w-9 place-items-center rounded-xl border border-white/10 bg-white/5">
+              <div class="h-4 w-4 rounded-sm border-2 border-white/80">
+                <div class="mt-[5px] h-[2px] w-3 bg-white/80"></div>
+              </div>
+            </div>
+            <div>
+              <div class="text-sm font-semibold">{brand}</div>
+              <div class="text-xs text-slate-400">CIAM • IAM • Gateway</div>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-400">
+            <a class="hover:text-slate-200" href="#producto">Producto</a>
+            <a class="hover:text-slate-200" href="#arquitectura">Arquitectura</a>
+            <a class="hover:text-slate-200" href="#casos">Casos</a>
+            <a class="hover:text-slate-200" href="#demo">Demo</a>
+          </div>
+        </div>
+
+        <div class="mt-8 text-xs text-slate-500">
+          © {new Date().getFullYear()}
+          {brand}. Todos los derechos reservados.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
