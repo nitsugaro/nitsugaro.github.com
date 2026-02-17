@@ -1,0 +1,14 @@
+<svg id="icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <!-- Background opcional -->
+        <rect id="bg" x="0" y="0" width="100" height="100" fill="none"/>
+
+        <!-- "Stroke" externo = padding hacia afuera (NO toca el cuadrado) -->
+        <rect id="pad" x="13" y="13" width="76" height="76" fill="none" rx="14" ry="14"/>
+
+        <!-- Cuadrado (NO se modifica) -->
+        <rect id="frame" x="14" y="14" width="74" height="74" fill="none" stroke="#ffffff" stroke-width="6" rx="11" ry="11"/>
+
+        <!-- Línea y círculo (los tuyos) -->
+        <line id="bar" x1="16" y1="51" x2="63" y2="51" stroke="#ffffff" stroke-width="6" stroke-linecap="butt"/>
+        <circle id="dot" cx="74" cy="51" r="4.5" fill="#ffffff"/>
+    </svg>
